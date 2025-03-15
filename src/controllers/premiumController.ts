@@ -11,27 +11,22 @@ const premiumController = async (
 ) => {
   console.log("📡 POST-request to Squarelife API...");
 
-  const oggi = new Date();
-  const origin = parseInt(
-    oggi.getFullYear().toString() +
-      (oggi.getMonth() + 1).toString().padStart(2, "0") +
-      oggi.getDate().toString().padStart(2, "0")
-  );
   try {
-    const { dataNascita, fumatore, durata, copertura, altezza, peso } =
+    const { origin, birthdate, smoker, duration, coverage, height, weight } =
       req.body;
+    console.log(req.body);
 
     const response = await axios.post(
       `${API_BASE_URL}/squarelife_protection/api/v0/switzerland/life_insurance/premium`,
 
       {
         origin,
-        birthdate: dataNascita,
-        smoker: fumatore,
-        duration: durata,
-        coverage: copertura,
-        height: altezza,
-        weight: peso,
+        birthdate,
+        smoker,
+        duration,
+        coverage,
+        height,
+        weight,
       },
       {
         headers: {
