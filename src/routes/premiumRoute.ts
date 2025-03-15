@@ -3,6 +3,6 @@ import premiumController from "../controllers/premiumController";
 
 const premiumRoute = express.Router();
 
-premiumRoute.post("/premium", premiumController);
+premiumRoute.post("/", premiumController);
 
 export default premiumRoute;

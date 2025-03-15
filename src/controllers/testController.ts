@@ -15,15 +15,14 @@ type PremiumRequest = {
 dotenv.config();
 const { API_BASE_URL, API_KEY } = process.env;
 
-const premiumController = async (
+const testController = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const response = await axios.post(
+    const response = await axios.options(
       `${API_BASE_URL}/squarelife_protection/api/v0/switzerland/life_insurance/premium`,
-      req.body,
       {
         headers: {
           "X-SQUARELIFE-APIKEY": API_KEY,
@@ -31,10 +30,10 @@ const premiumController = async (
       }
     );
 
-    res.status(200).json(response.data);
+    res.status(200).json(true);
   } catch (error: any) {
-    res.status(500).json({ error: error.response?.data || "❌ Server ERROR" });
+    res.status(500).json(false);
   }
 };
 
-export default premiumController;
+export default testController;

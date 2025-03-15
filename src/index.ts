@@ -5,6 +5,7 @@ import cors from "cors";
 import "dotenv/config";
 
 import premiumRoute from "./routes/premiumRoute";
+import testRoute from "./routes/testRoute";
 
 const { PORT = 3000, API_BASE_URL } = process.env;
 
@@ -17,7 +18,8 @@ app.use(express.static("public"));
 
 const startServer = async () => {
   try {
-    app.use("/proxi", premiumRoute);
+    app.use("/premium", premiumRoute);
+    app.use("/test", testRoute);
 
     app.use((_, res) => {
       res.status(404).json({ message: "Route not found" });
