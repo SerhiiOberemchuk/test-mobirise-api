@@ -1,6 +1,8 @@
 import express from "express";
+import premiumController from "../controllers/premiumController";
 
-const premium = express.Router();
+const premiumRoute = express.Router();
 
-premium.get("/premium", (_, res) => {});
-export default premium;
+premiumRoute.post("/premium", premiumController);
+
+export default premiumRoute;

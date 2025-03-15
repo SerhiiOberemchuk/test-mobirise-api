@@ -1,9 +1,11 @@
-export type PremiumController = {
+export type PremiumControllerTypes = {
   body: {
-    origin: string;
-    birthdate: string;
+    origin: number;
+    birthdate: number;
     smoker: boolean;
-    duration: string;
-    coverage: string;
+    duration: number;
+    coverage: number;
+    height?: number;
+    weight?: number;
   };
 };
