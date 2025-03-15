@@ -4,7 +4,7 @@ import cors from "cors";
 
 import "dotenv/config";
 
-import premiumRoute from "./src/routes/premiumRoute";
+import premiumRoute from "./routes/premiumRoute";
 
 const { PORT = 3000, API_BASE_URL } = process.env;
 
