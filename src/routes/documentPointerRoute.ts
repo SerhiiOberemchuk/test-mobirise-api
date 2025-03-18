@@ -2,15 +2,15 @@ import express from "express";
 import { Request, Response, NextFunction } from "express";
 import { axiosApiInstans } from "../api/axios";
 
-const premiumRoute = express.Router();
+const documentPointerRoute = express.Router();
 
-premiumRoute.post(
-  "/",
+documentPointerRoute.get(
+  "/:documentPointer",
   async (req: Request, res: Response, next: NextFunction) => {
+    const { documentPointer } = req.params;
     try {
-      const response = await axiosApiInstans.post(
-        "/squarelife_protection/api/v0/switzerland/life_insurance/premium",
-        req.body
+      const response = await axiosApiInstans.get(
+        `/document_pointer/${documentPointer}`
       );
 
       res.status(200).json(response.data);
@@ -22,4 +22,4 @@ premiumRoute.post(
   }
 );
 
-export default premiumRoute;
+export default documentPointerRoute;

@@ -2,14 +2,14 @@ import express from "express";
 import { Request, Response, NextFunction } from "express";
 import { axiosApiInstans } from "../api/axios";
 
-const premiumRoute = express.Router();
+const applicationRoute = express.Router();
 
-premiumRoute.post(
+applicationRoute.post(
   "/",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const response = await axiosApiInstans.post(
-        "/squarelife_protection/api/v0/switzerland/life_insurance/premium",
+        "/squarelife_protection/api/v0/switzerland/life_insurance/application",
         req.body
       );
 
@@ -22,4 +22,4 @@ premiumRoute.post(
   }
 );
 
-export default premiumRoute;
+export default applicationRoute;

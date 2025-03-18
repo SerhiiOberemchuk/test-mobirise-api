@@ -1,13 +1,18 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
+import { Request, Response, NextFunction } from "express";
 
 import "dotenv/config";
 
 import premiumRoute from "./routes/premiumRoute";
 import testRoute from "./routes/testRoute";
+import offerRoute from "./routes/offerRoute";
+import applicationRoute from "./routes/applicationRoute";
+import documentPointerRoute from "./routes/documentPointerRoute";
+import memoRoute from "./routes/memoRoute";
 
-const { PORT = 3000, API_BASE_URL } = process.env;
+const { PORT = 3000 } = process.env;
 
 const app = express();
 
@@ -20,14 +25,20 @@ const startServer = async () => {
   try {
     app.use("/premium", premiumRoute);
     app.use("/test", testRoute);
+    app.use("/offer", offerRoute);
+    app.use("/application", applicationRoute);
+    app.use("/document_pointer", documentPointerRoute);
+    app.use("/memo/upload", memoRoute);
 
     app.use((_, res) => {
       res.status(404).json({ message: "Route not found" });
     });
 
-    app.use((err: any, req: any, res: any, next: any) => {
-      const { status = 500, message = "Server error" } = err;
-      res.status(status).json({ message });
+    app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+      console.error("❌ ERROR:", err.message, err.stack);
+      res
+        .status(err.status || 500)
+        .json({ message: err.message || "Server error" });
       next();
     });
 
