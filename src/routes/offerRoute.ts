@@ -50,9 +50,6 @@ offerRoute.post(
         )
       );
 
-      // console.log(req.body);
-
-      // Налаштування листа
       try {
         const info = await transporter.sendMail({
           from: API_BASE_EMAIL,
