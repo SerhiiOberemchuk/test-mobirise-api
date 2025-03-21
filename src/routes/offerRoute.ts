@@ -32,13 +32,24 @@ offerRoute.post(
         req.body
       );
 
-      const document_pointer1 = response.data.document_pointers[0].pointer;
+      const documentsPointer = response.data.document_pointers || [];
 
-      const documentResponse = await axiosApiInstans.get(
-        `/document_pointer/${document_pointer1}`,
-        { responseType: "arraybuffer" }
+      const attachments = await Promise.all(
+        documentsPointer.map(
+          async (item: { pointer: string }, index: number) => {
+            const documentResponse = await axiosApiInstans.get(
+              `/document_pointer/${item.pointer}`,
+              { responseType: "arraybuffer" }
+            );
+            return {
+              filename: `document${index + 1}.pdf`,
+              content: Buffer.from(documentResponse.data),
+              contentType: "application/pdf",
+            };
+          }
+        )
       );
-      const documentBuffer = Buffer.from(documentResponse.data);
+
       // console.log(req.body);
 
       // Налаштування листа
@@ -48,13 +59,7 @@ offerRoute.post(
           to: req.body.holder.email,
           subject: "Message",
           text: "I hope this message gets delivered!",
-          attachments: [
-            {
-              filename: "document.pdf",
-              content: documentBuffer,
-              contentType: "application/pdf",
-            },
-          ],
+          attachments,
         });
         console.log("Email send successful:", info);
       } catch (err) {
