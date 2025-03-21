@@ -10,7 +10,7 @@ testRoute.get("/", async (req: Request, res: Response, next: NextFunction) => {
       "/squarelife_protection/api/v0/switzerland/life_insurance/premium"
     );
 
-    res.status(200).json(true);
+    res.status(response.status).json(true);
   } catch (error: any) {
     res.status(error.response?.status || 500).json(false);
   }

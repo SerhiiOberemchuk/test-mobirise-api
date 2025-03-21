@@ -14,12 +14,11 @@ memoRoute.post("/", async (req: Request, res: Response, next: NextFunction) => {
       requestData
     );
 
-    res.status(200).json(response.data);
+    res.status(response.status).json(response.data);
   } catch (error: any) {
-    console.error("❌ ERROR API:", error.message);
     res
       .status(error.response?.status || 500)
-      .json({ error: error.response?.data || "❌ Server ERROR" });
+      .json(error.response?.data || "❌ Server ERROR");
   }
 });
 
