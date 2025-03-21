@@ -35,9 +35,10 @@ offerRoute.post(
       const document_pointer1 = response.data.document_pointers[0].pointer;
 
       const documentResponse = await axiosApiInstans.get(
-        `/document_pointer/${document_pointer1}`
+        `/document_pointer/${document_pointer1}`,
+        { responseType: "arraybuffer" }
       );
-      // const documentBuffer = Buffer.from(documentResponse.data);
+      const documentBuffer = Buffer.from(documentResponse.data);
       // console.log(req.body);
 
       // Налаштування листа
@@ -50,7 +51,7 @@ offerRoute.post(
           attachments: [
             {
               filename: "document.pdf",
-              content: documentResponse.data,
+              content: documentBuffer,
               contentType: "application/pdf",
             },
           ],
