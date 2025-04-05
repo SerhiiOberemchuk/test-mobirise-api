@@ -55,7 +55,7 @@ offerRoute.post(
           from: API_BASE_EMAIL,
           to: req.body.holder.email,
           subject: "Message",
-          text: "I hope this message gets delivered!",
+          text: `ID dell'offerta:${req.body.id}`,
           attachments,
         });
         console.log("Email send successful:", info);
