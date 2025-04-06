@@ -36,13 +36,16 @@ offerRoute.post(
 
       const attachments = await Promise.all(
         documentsPointer.map(
-          async (item: { pointer: string }, index: number) => {
+          async (
+            item: { pointer: string; description: string },
+            index: number
+          ) => {
             const documentResponse = await axiosApiInstans.get(
               `/document_pointer/${item.pointer}`,
               { responseType: "arraybuffer" }
             );
             return {
-              filename: `document${index + 1}.pdf`,
+              filename: `${item.description}.pdf`,
               content: Buffer.from(documentResponse.data),
               contentType: "application/pdf",
             };
