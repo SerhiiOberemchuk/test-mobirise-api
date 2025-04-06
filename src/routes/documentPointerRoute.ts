@@ -10,10 +10,17 @@ documentPointerRoute.get(
     const { documentPointer } = req.params;
     try {
       const response = await axiosApiInstans.get(
-        `/document_pointer/${documentPointer}`
+        `/document_pointer/${documentPointer}`,
+        { responseType: "arraybuffer" }
       );
 
-      res.status(response.status).json(response.data);
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename="${documentPointer}.pdf"`
+      );
+
+      res.status(200).send(Buffer.from(response.data));
     } catch (error: any) {
       res
         .status(error.response?.status || 500)
