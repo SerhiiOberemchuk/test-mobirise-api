@@ -1,27 +1,15 @@
 import express from "express";
 import { Request, Response, NextFunction } from "express";
 import { axiosApiInstans } from "../api/axios";
-import nodemailer from "nodemailer";
+
 import dotenv from "dotenv";
+import { transporter } from "../utils/email";
 
 dotenv.config();
 
-const { API_BASE_EMAIL, EMAIL_KEY } = process.env;
+const { API_BASE_EMAIL } = process.env;
 
 const offerRoute = express.Router();
-
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  auth: {
-    user: API_BASE_EMAIL,
-    pass: EMAIL_KEY,
-  },
-  tls: {
-    rejectUnauthorized: false,
-  },
-});
 
 offerRoute.post(
   "/",
@@ -36,10 +24,7 @@ offerRoute.post(
 
       const attachments = await Promise.all(
         documentsPointer.map(
-          async (
-            item: { pointer: string; description: string },
-            index: number
-          ) => {
+          async (item: { pointer: string; description: string }) => {
             const documentResponse = await axiosApiInstans.get(
               `/document_pointer/${item.pointer}`,
               { responseType: "arraybuffer" }
