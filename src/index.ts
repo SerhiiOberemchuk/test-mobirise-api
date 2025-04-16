@@ -11,6 +11,7 @@ import offerRoute from "./routes/offerRoute";
 import applicationRoute from "./routes/applicationRoute";
 import documentPointerRoute from "./routes/documentPointerRoute";
 import memoRoute from "./routes/memoRoute";
+import sendDocumentsRoute from "./routes/sendDocumentsRoute";
 
 const { PORT = 3000 } = process.env;
 
@@ -28,6 +29,7 @@ const startServer = async () => {
     app.use("/offer", offerRoute);
     app.use("/application", applicationRoute);
     app.use("/document_pointer", documentPointerRoute);
+    app.use("/send_documents", sendDocumentsRoute);
     app.use("/memo/upload", memoRoute);
 
     app.use((_, res) => {
