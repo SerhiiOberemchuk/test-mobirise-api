@@ -9,12 +9,12 @@ const { API_BASE_EMAIL } = process.env;
 applicationRoute.post(
   "/",
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.body);
+    const { email, id, underwriting } = req.body;
 
     try {
       const response = await axiosApiInstans.post(
         "/squarelife_protection/api/v0/switzerland/life_insurance/application",
-        req.body
+        { id, underwriting }
       );
 
       const documentsPointer = response.data.document_pointers || [];
@@ -37,7 +37,7 @@ applicationRoute.post(
       try {
         const info = await transporter.sendMail({
           from: API_BASE_EMAIL,
-          to: req.body.email,
+          to: email,
           subject: "Message",
           text: "Application(policyissuing)",
           attachments,
