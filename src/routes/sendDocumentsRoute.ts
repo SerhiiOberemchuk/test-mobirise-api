@@ -15,16 +15,7 @@ sendDocumentsRoute.post(
   "/",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { documentsPointer = [], email, id } = req.body;
-      // if (!email || !Array.isArray(documentsPointer) || !id) {
-      //   return res.status(400).json({ error: "Dati incompleti o non validi." });
-      // }
-
-      // if (!API_BASE_EMAIL) {
-      //   return res
-      //     .status(500)
-      //     .json({ error: "Email del mittente non configurata." });
-      // }
+      const { documentsPointer = [], email, textEmail = "" } = req.body;
 
       const attachments = await Promise.all(
         documentsPointer.map(
@@ -46,7 +37,7 @@ sendDocumentsRoute.post(
         from: API_BASE_EMAIL,
         to: email,
         subject: "Message",
-        text: `ID dell'offerta:${id}`,
+        text: textEmail,
         attachments,
       });
 
